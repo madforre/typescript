@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "allowJs": true, // 프로젝트 안에서 자바스크립트 파일을 허용
+        "checkJs": true, // 자바스크립트에서 타입검사 기능을 활용 - @ts-check로 사용 하는 것과 같은 역할
+        "noImplicitAny": true, // 모든 타입에서 최소한 Any라는 기본적인 타입이라도 넣어야만 하도록 설정
+        "noImplicitThis": true, // 'any' 타입으로 구현된 'this' 표현식 에러처리 여부 //
+    }
+}
