@@ -78,13 +78,15 @@ test_arr.push(4); // error
 test_arr[0] = 100; // error
 test_arr_2.push(7); // error
 
-
 // 객체 선언과 관련된 타입 체킹 - 옵션 속성임에도 불구하고 비슷한 이름의 속성이 있어 오탈자 점검으로 인해 에러가 나는 경우를 무시할 수 있음.
-brewBeer({ name: 'some beer', hope: 1 }); // 타입스크립트는 인터페이스를 이용하여 객체를 선언할 때 좀 더 엄밀한 속성 검사를 진행함. 현재는 옵션 속성인데도 이름이 비슷해서 에러가 나고 있음.
+function makeBrewBeer(beer: CraftBeer) {
+    console.log(beer.name); // Saporo
+}
+makeBrewBeer({ name: 'some beer', hope: 1 }); // 타입스크립트는 인터페이스를 이용하여 객체를 선언할 때 좀 더 엄밀한 속성 검사를 진행함. 현재는 옵션 속성인데도 이름이 비슷해서 에러가 나고 있음.
 
 let myBeer_3 = { name: 'the beer', hope: 2 };
-brewBeer(myBeer_3 as CraftBeer); // 오탈자 점검 타입 추론을 무시하고 싶다면 as를 활용하여 선언하면 된다.
-brewBeer({ name: 'the beer', hope: 2 } as CraftBeer); // 인자에 바로 객체를 선언해도 가능.
+makeBrewBeer(myBeer_3 as CraftBeer); // 오탈자 점검 타입 추론을 무시하고 싶다면 as를 활용하여 선언하면 된다.
+makeBrewBeer({ name: 'the beer', hope: 2 } as CraftBeer); // 인자에 바로 객체를 선언해도 가능.
 
 // 인터페이스에 정의하지 않은 속성들을 추가로 사용하고 싶을 때는 아래와 같은 방법 사용
 interface CraftBeer_3 {
@@ -143,10 +145,14 @@ interface Person {
 }
 interface Developer extends Person {
     skill: string;
+    free_use?: boolean;
 }
 let fe = {} as Developer; // Developer 인터페이스를 이행하는 객체를 fe 변수에 할당.
 fe.name = 'reggie';
 fe.skill = 'TypeScript';
+
+let fe2: Developer; // 이렇게도 인터페이스 사용 가능한듯.
+fe2.name = "test";
 
 interface Drinker extends Person {
     drink: string;
@@ -154,10 +160,10 @@ interface Drinker extends Person {
 interface Developer extends Drinker { // 여러 인터페이스를 상속 받아 사용 가능.
     skill: string;
 }
-let fe_2 = {} as Developer;
-fe.name = 'gosu';
-fe.skill = 'TypeScript';
-fe.drink = 'Beer';
+let fe3 = {} as Developer;
+fe3.name = 'gosu';
+fe3.skill = 'TypeScript';
+fe3.drink = 'Beer';
 
 /**
  * 하이브리드 타입
@@ -166,23 +172,23 @@ fe.drink = 'Beer';
  * 다음과 같이 함수 타입이면서 객체 타입을 정의할 수 있는 인터페이스가 있음.
  * 
  */
-interface CraftBeer {
+interface CraftBeer_5 {
     (beer: string): string;
     brand: string;
     brew(): void;
 }
 
-function myBeer_5(): CraftBeer {
-    let my = ((beer: string) => {}) as CraftBeer;
+function myBeer_5(): CraftBeer_5 {
+    let my = ((beer: string) => {}) as CraftBeer_5;
     my.brand = 'Beer Kitchen';
     my.brew = function() {};
     return my;
 }
 
-let brewedBear = myBeer_5();
-brewedBear('My First Beer');
-brewBeer.brand = 'Some Craft';
-brewedBear.brew(); // 함수도 객체고 객체도 함수니깐.. 자바스크립트가 일급 객체 프로그래밍이니깐 가능한 것이라고 생각한다.
+let testBrewedBear = myBeer_5();
+testBrewedBear('My First Beer');
+testBrewedBear.brand = 'Some Craft';
+testBrewedBear.brew(); // 함수도 객체고 객체도 함수니깐.. 자바스크립트가 일급 객체 프로그래밍이니깐 가능한 것이라고 생각한다.
 
 /**
  * 클래스를 상속 받는 인터페이스도 경우에 따라 사용하는 듯 하나 개념이 혼동될 수 있어 추후 살펴볼 예정. 인터페이스 끝.

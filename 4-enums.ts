@@ -62,8 +62,7 @@ function getX(obj: { X: number }) {
 getX(E); // 이넘 E의 X는 숫자형 이넘 (초기 값 안줬으므로)이기 때문에 정상 동작.
 
 // 컴파일 시점에서의 이넘 특징 - 런타임 시점에서는 실제 객체지만 컴파일 시점에서는 keyof를 사용할 때 주의해야 한다. 
-// (keyof는 Object의 key 값들을 가져오고 싶을 때 사용. typeof는 값을 타입으로 쓰고 싶을 때 사용. 
-// 자바스크립트 값은 type으로 쓸 수 없기 때문에 typeof가 먼저 붙는 것.)
+// (keyof는 Object의 key 값들을 가져오고 싶을 때 사용. typeof는 값을 타입으로 쓰고 싶을 때 사용. 자바스크립트 값은 type으로 쓸 수 없기 때문에 typeof가 먼저 붙는 것.)
 // 일반적으로 keyof를 사용해야 하는 상황에서는 keyof typeof 를 사용하자.
 enum LogLevel {
     ERROR, WARN, INFO, DEBUG
