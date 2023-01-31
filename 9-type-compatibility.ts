@@ -3,6 +3,8 @@
  * 
  * 타입스크립트 코드에서 특정 타입이 다른 타입에 잘 맞는지를 의미함.
  * 
+ * Compatibility 뜻 : 1. 양립[공존] 가능성 / 2. (컴퓨터의) 호환성
+ * 
  */
 interface Gem {
     name: string;
